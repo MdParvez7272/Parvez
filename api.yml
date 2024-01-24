@@ -1,0 +1,115 @@
+openapi: 3.0.0
+info:
+  title: E-commerce Customer API
+  version: 1.0.0
+paths:
+  /admin/api/2022-01/customers.json:
+    get:
+      summary: Retrieve a list of customers
+      operationId: listCustomers
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              example: |-
+                {
+                  "customers": [
+                    {
+                      "id": 1,
+                      "first_name": "John",
+                      "last_name": "Doe",
+                      "email": "john.doe@example.com"
+                    },
+                    {
+                      "id": 2,
+                      "first_name": "Jane",
+                      "last_name": "Smith",
+                      "email": "jane.smith@example.com"
+                    }
+                  ]
+                }
+    post:
+      summary: Create a new customer
+      operationId: createCustomer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            example: |-
+              {
+                "customer": {
+                  "first_name": "New",
+                  "last_name": "Customer",
+                  "email": "new.customer@example.com"
+                }
+              }
+      responses:
+        '201':
+          description: Customer created successfully
+  /admin/api/2022-01/customers/{customer_id}.json:
+    get:
+      summary: Retrieve details for a specific customer
+      operationId: getCustomer
+      parameters:
+        - name: customer_id
+          in: path
+          required: true
+          description: ID of the customer to retrieve
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              example: |-
+                {
+                  "customer": {
+                    "id": 1,
+                    "first_name": "John",
+                    "last_name": "Doe",
+                    "email": "john.doe@example.com"
+                  }
+                }
+    put:
+      summary: Update information for a specific customer
+      operationId: updateCustomer
+      parameters:
+        - name: customer_id
+          in: path
+          required: true
+          description: ID of the customer to update
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            example: |-
+              {
+                "customer": {
+                  "first_name": "Updated",
+                  "last_name": "Customer"
+                }
+              }
+      responses:
+        '200':
+          description: Customer updated successfully
+        '404':
+          description: Customer not found
+    delete:
+      summary: Delete a specific customer
+      operationId: deleteCustomer
+      parameters:
+        - name: customer_id
+          in: path
+          required: true
+          description: ID of the customer to delete
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Customer deleted successfully
+        '404':
+          description: Customer not found
